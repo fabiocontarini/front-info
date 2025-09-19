@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Politica de privacidade";
+}
+
+<style>
+    body {
+        background-color: #FFEC6A; /* Cor de fundo amarela vibrante, imitando a casca da banana */
+        background-image: linear-gradient(45deg, #FFDC42 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #FFDC42 75%);
+        background-size: 40px 40px;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    h1 {
+        color: #F1C40F; /* Amarelo vibrante da casca da banana */
+        text-align: center;
+        padding: 20px;
+        font-size: 3rem;
+        margin-top: 50px;
+    }
+
+    p {
+        color: #F39C12; /* Tom de amarelo mais forte */
+        font-size: 1.2rem;
+        text-align: center;
+        max-width: 800px;
+        margin: 20px auto;
+        line-height: 1.6;
+        padding: 10px;
+    }
+
+    .content {
+        background-color: #FFEC6A; /* Fundo amarelado vibrante */
+        border: 3px solid #F1C40F; /* Borda amarela brilhante */
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        max-width: 900px;
+        margin: 20px auto;
+    }
+
+        .content a {
+            color: #F39C12; /* Cor do link, amarelo mais forte */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+            .content a:hover {
+                color: #FFDC42; /* Cor mais vibrante ao passar o mouse */
+                text-decoration: underline;
+            }
+
+    .banana-emoji {
+        font-size: 2rem;
+        color: #F1C40F;
+    }
+</style>
+
+<div class="content">
+    <h1>@ViewData["Title"] <span class="banana-emoji">🍌</span></h1>
+    <p>Use essa pagina para conferir as politicas de privacidade do site. 🍌</p>
+</div>

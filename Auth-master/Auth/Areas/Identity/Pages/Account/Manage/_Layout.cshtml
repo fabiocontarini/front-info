@@ -1,0 +1,45 @@
+﻿@{
+    // Verifica se o ParentLayout está disponível no ViewData
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout != null)
+    {
+        // Usa o layout pai, se disponível
+        Layout = parentLayout.ToString();
+    }
+    else
+    {
+        // Usa o layout padrão se não encontrar o ParentLayout
+        Layout = "/Areas/Identity/Pages/_Layout.cshtml";
+    }
+}
+
+<h1 class="text-center text-warning" style="font-family: 'Arial', sans-serif; transition: color 0.3s ease;">Gerenciar sua conta</h1>
+
+<!-- Vídeo de fundo -->
+<video autoplay loop muted style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+    <source src="https://example.com/your-video.mp4" type="video/mp4">
+    Seu navegador não suporta o formato de vídeo.
+</video>
+
+<div class="container" style="padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease;">
+    <h2 class="mb-4 text-success" style="font-family: 'Arial', sans-serif; transition: color 0.3s ease;">Alterar as configurações da sua conta</h2>
+
+    <hr style="border-top: 2px solid #F4A300;" />
+
+    <!-- Estrutura de layout responsivo -->
+    <div class="row">
+        <!-- Barra lateral de navegação -->
+        <div class="col-md-3" style="background-color: rgba(0, 0, 0, 0.6); padding: 15px; border-radius: 8px; color: white; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); transition: transform 0.3s ease;">
+            <partial name="_ManageNav" />
+        </div>
+
+        <!-- Conteúdo principal -->
+        <div class="col-md-9" style="background-color: rgba(255, 248, 225, 0.9); padding: 15px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease;">
+            @RenderBody()
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Scripts adicionais se houver -->
+    @RenderSection("Scripts", required: false)
+}

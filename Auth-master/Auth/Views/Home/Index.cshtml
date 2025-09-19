@@ -1,0 +1,181 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infomed - Saúde e Bem-estar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('Images/FundoAzul.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        /* Hero */
+        .hero {
+            background: url('Images/medico.jpg') no-repeat right center;
+            background-size: cover;
+            color: #1a2a45;
+            min-height: 623px;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+            .hero h1 {
+                font-size: 4rem;
+                font-weight: bold;
+            }
+
+        /* Botões principais */
+        .btn-consultas {
+            background-color: #4db6ac;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 1rem;
+            width: 250px;
+        }
+
+            .btn-consultas:hover {
+                background-color: #399387;
+                color: #fff;
+            }
+
+        .btn-areamedico {
+            background-color: #4db6ac;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+            .btn-areamedico:hover {
+                background-color: #399387;
+                color: #fff;
+            }
+
+        /* Botões Registrar e Entrar */
+        .btn-outline-custom {
+            border: 2px solid #4db6ac;
+            color: #4db6ac;
+            background: transparent;
+            padding: 6px 16px;
+            border-radius: 8px;
+            font-weight: 500;
+            margin-left: 8px;
+            transition: 0.3s;
+        }
+
+            .btn-outline-custom:hover {
+                background-color: #4db6ac;
+                color: #fff;
+            }
+
+        /* Cards */
+        .info-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #000;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #e6f0f3;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+            footer a {
+                text-decoration: none;
+                color: #333;
+            }
+
+        .social-icons i {
+            font-size: 1.8rem;
+            margin: 0 10px;
+            color: #4db6ac;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-light bg-light shadow-sm px-3">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <button class="btn btn-light me-2"><i class="bi bi-person-circle"></i></button>
+                <button class="btn btn-light me-3"><i class="bi bi-question-circle"></i></button>
+                <a href="/Home/Privacy" class="btn btn-areamedico">Área do Médico</a>
+            </div>
+
+            <div class="d-flex align-items-center">
+                <a class="navbar-brand fw-bold d-flex align-items-center me-3" href="#">
+                    <img src="Images/LogoInfomed.png" width="40" class="me-2">
+                    INFOMED
+                </a>
+                <a href="/Identity/Account/Register" class="btn btn-outline-custom">Registrar-se</a>
+                <a href="/Identity/Account/login" class="btn btn-outline-custom">Entrar</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container text-center text-md-start">
+            <h1>Sua saúde em<br>1º lugar</h1>
+            <a href="Consultas.html" class="btn btn-consultas mt-3">Consultas</a>
+        </div>
+    </section>
+
+    <!-- Sobre e Objetivo -->
+    <section class="container py-5">
+        <div class="info-card">
+            <h5>Sobre a Infomed</h5>
+            <p>
+                Na Infomed, acreditamos que a saúde é um direito fundamental e deve ser acessível a todos.
+                Por isso, criamos um aplicativo inovador que conecta médicos e pacientes de forma simples e eficiente,
+                facilitando o agendamento de consultas presenciais e ampliando o alcance dos profissionais da saúde.
+            </p>
+        </div>
+        <div class="info-card">
+            <h5>Nosso objetivo</h5>
+            <p>
+                Nosso projeto busca resolver a dificuldade que a população enfrenta ao agendar consultas médicas e retirar medicamentos na farmácia popular.
+                Vamos desenvolver um sistema que reúna médicos disponíveis, seus horários e o estoque da farmácia popular,
+                facilitando o acesso à saúde e evitando filas desnecessárias.
+                O objetivo é oferecer um atendimento acessível, economizando recursos da população e proporcionando informações úteis para melhorar a qualidade de vida.
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="mb-3">
+                <i class="bi bi-telephone"></i> (14) 99999-9999 <br>
+                <i class="bi bi-envelope"></i> infomed3@gmail.com
+            </div>
+            <div class="social-icons mb-3">
+                <a href="#"><i class="bi bi-instagram"></i></a>
+                <a href="#"><i class="bi bi-linkedin"></i></a>
+                <a href="#"><i class="bi bi-facebook"></i></a>
+            </div>
+            <div>
+                <a href="#">Sobre-nós</a> | <a href="#">Início</a>
+            </div>
+            <p class="mt-2 mb-0">
+                <img src="Images/LogoInfomed.png" width="30" class="me-1">
+                INFOMED - Saúde e Bem-estar
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
