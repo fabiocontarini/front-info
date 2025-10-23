@@ -1,0 +1,524 @@
+﻿@{ Layout = null; }
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chat INFOMED</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+    <style>
+        /* Cores da Paleta INFOMED */
+        :root {
+            --color-primary: #4db6ac; /* Azul Água - Cabeçalho e Botões */
+            --color-primary-darker: #399589; /* Um tom mais escuro para hover */
+            --color-sidebar-bg: rgba(255, 255, 255, 0.15); /* Fundo da Sidebar (Transparente) */
+            --color-chat-bg: #f5f5f5; /* Fundo das Mensagens */
+            --color-bot-bubble: #ffffff; /* Bolha do Bot (Branco) */
+            --color-user-bubble: #dcf8c6; /* Bolha do Usuário (Verde Claro - Mantido para distinção) */
+            --color-text-dark: #333333;
+            --color-text-light: #ffffff;
+            --color-neutral-bg: #e7e7e7; /* Nova cor neutra para o body */
+        }
+
+        /* Estilos globais e de fundo */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            /* Fundo principal neutro e sólido */
+            background-color: var(--color-neutral-bg); 
+            /* A imagem de fundo é adicionada para dar um toque, mas não domina */
+            background-image: url('/Images/FundoAzul.jpg');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover; /* Ajusta a imagem para cobrir */
+            background-blend-mode: multiply; /* Mistura a imagem com a cor sólida */
+
+            font-family: 'Segoe UI', Arial, sans-serif;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Container principal do chat */
+        .chat-window {
+            width: 100%;
+            max-width: 1000px;
+            height: 100%;
+            max-height: 800px;
+            display: flex;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* Coluna lateral (Sidebar Otimizada) */
+        .sidebar {
+            width: 250px;
+            min-width: 250px;
+            background: var(--color-sidebar-bg);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.25) 100%); 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: start;
+            padding: 40px 20px;
+            color: var(--color-text-light);
+            box-sizing: border-box;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .sidebar .logo-container {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        /* Nova imagem da logo: fotochat.png */
+        .sidebar img.main-logo {
+            width: 120px; 
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid var(--color-text-light);
+            object-fit: cover;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar h3 {
+            font-size: 1.6rem;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+        }
+        
+        .sidebar p {
+            font-size: 0.95rem;
+            margin-top: 0;
+            opacity: 0.9;
+        }
+
+        /* Retângulo/divisor abaixo do texto "CHAT INFOMED Atendimento automatizado" */
+        .sidebar .divider {
+            width: 80%; /* Largura do retângulo */
+            height: 2px; /* Espessura */
+            background-color: var(--color-text-light); /* Cor branca */
+            opacity: 0.3; /* Levemente transparente */
+            margin-top: 15px; /* Espaço do texto acima */
+            border-radius: 1px;
+        }
+
+
+        /* Área principal do chat */
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--color-chat-bg); 
+        }
+
+        /* Cabeçalho do chat */
+        .chat-header {
+            display: flex;
+            align-items: center;
+            background: var(--color-primary); 
+            color: var(--color-text-light);
+            padding: 10px 15px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            position: relative; /* Para posicionar o botão de voltar */
+        }
+
+        /* Botão de voltar */
+        .chat-header .btn-back {
+            background-color: transparent; /* Transparente por padrão */
+            border: none;
+            color: var(--color-text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%; /* Fundo redondo */
+            transition: background-color 0.2s ease-in-out; /* Transição suave */
+            margin-right: 10px; /* Espaço para o perfil */
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .chat-header .btn-back:hover {
+            background-color: var(--color-primary-darker); /* Cor de hover */
+        }
+
+        .chat-header .profile-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 60px; /* Espaço para o botão de voltar */
+        }
+
+        /* Nova imagem de perfil no cabeçalho */
+        .chat-header img.profile-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid white;
+        }
+        
+        .chat-header .status {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            line-height: 1;
+        }
+
+        /* Área das mensagens */
+        .chat-messages {
+            flex: 1;
+            padding: 20px 8%; 
+            overflow-y: auto;
+            display: flex; 
+            flex-direction: column;
+            gap: 5px; 
+        }
+
+        /* Bolhas de mensagem - Estilos mantidos */
+        .message {
+            max-width: 65%; 
+            padding: 8px 10px;
+            border-radius: 8px; 
+            box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1);
+            position: relative;
+            font-size: 0.95rem;
+            color: var(--color-text-dark);
+        }
+
+        .message.bot {
+            background: var(--color-bot-bubble); 
+            align-self: flex-start;
+            border-top-left-radius: 3px; 
+            border-top-right-radius: 8px;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        .message.user {
+            background: var(--color-user-bubble); 
+            align-self: flex-end;
+            border-top-right-radius: 3px;
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        .message .timestamp {
+            font-size: 0.7rem;
+            color: #888;
+            margin-top: 5px;
+            display: block;
+            text-align: right;
+            line-height: 1;
+        }
+
+        /* Input Fixo (Ajuste para se parecer mais com o WhatsApp) */
+        .chat-input {
+            display: flex;
+            padding: 10px 15px; 
+            background: var(--color-chat-bg); 
+            border-top: 1px solid #e0e0e0;
+            align-items: center;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 12px 20px; 
+            border-radius: 24px;
+            border: none; 
+            outline: none;
+            background: white;
+            font-size: 1rem;
+            box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
+            text-align: left; 
+            margin-right: 8px; 
+        }
+
+        .chat-input button {
+            background: var(--color-primary); 
+            border: none;
+            color: white;
+            border-radius: 50%;
+            width: 48px; 
+            height: 48px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.2s;
+            flex-shrink: 0; 
+        }
+
+        .chat-input button:hover {
+            background: var(--color-primary-darker);
+        }
+
+        /* Estilo para a opção de encaminhamento para o WhatsApp */
+        .whatsapp-link {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            background-color: var(--color-primary); 
+            color: white !important;
+            text-decoration: none;
+            border-radius: 20px;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+
+        .whatsapp-link:hover {
+            background-color: var(--color-primary-darker);
+        }
+
+        /* Responsividade básica para telas menores */
+        @@media (max-width: 768px) {
+            .chat-window {
+                max-height: 100vh;
+                border-radius: 0;
+            }
+            .sidebar {
+                display: none; 
+            }
+            .chat-messages {
+                padding: 10px; 
+            }
+            .chat-input input {
+                padding: 10px 15px;
+            }
+            .chat-header .btn-back {
+                left: 5px; /* Ajuste para mobile */
+            }
+            .chat-header .profile-info {
+                margin-left: 50px; /* Ajuste para mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-window">
+        <div class="sidebar">
+            <div class="logo-container">
+                 <img src="~/Images/fotochat.png" alt="Logo INFOMED Chat" class="main-logo"> 
+            </div>
+            <h3>CHAT INFOMED</h3>
+            <p>Atendimento automatizado</p>
+            <div class="divider"></div> </div>
+
+        <div class="chat-container">
+            <div class="chat-header">
+                <button class="btn-back" onclick="window.history.back() aria-label="Voltar">
+                    <i class="bi bi-arrow-left"></i>
+                </button>
+                <div class="profile-info">
+                    <img src="~/Images/fotochat.png" alt="INFOMED" class="profile-logo"> 
+                    <div>
+                        <span>INFOMED Suporte</span>
+                        <div class="status">online</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                </div>
+
+            <div class="chat-input">
+                <input type="number" placeholder="Digite o número da opção..." id="msgInput" min="0" onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()"><i class="bi bi-send"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const chatMessages = document.getElementById("chatMessages");
+        const msgInput = document.getElementById("msgInput");
+        const WHATSAPP_NUMBER = "5514997103440"; 
+        let currentLevel = 0; 
+
+        // Estrutura de opções (Árvore de Decisão) - MANTIDA
+        const options = {
+            0: { // Menu Principal
+                message: "👋 Olá! Seja bem-vindo(a)!<br> Para te atendermos melhor, escolha uma das opções abaixo:<br><br> 1️⃣ **Problemas com a conta** (Perfil, Login, Senha) <br> 2️⃣ **Problemas com o app ou site** (Erros, Lentidão) <br> 3️⃣ **Marcar ou reagendar consulta** <br> 4️⃣ **Falar com um atendente** (WhatsApp)",
+                next: {
+                    1: { level: 1, text: "Problemas com a conta" },
+                    2: { level: 2, text: "Problemas com app ou site" },
+                    3: { level: 3, text: "Marcar ou reagendar consulta" },
+                    4: { level: 4, text: "Falar com um atendente" }
+                }
+            },
+            1: { // Problemas com a conta
+                message: "Certo! Qual o problema relacionado à sua conta?<br><br> 1️⃣ Esqueci a senha <br> 2️⃣ Alterar dados do perfil <br> 3️⃣ Não consigo fazer login <br> 9️⃣ Voltar ao menu principal <br> 0️⃣ Falar com um atendente (WhatsApp)",
+                next: {
+                    1: { type: 'response', text: "Esqueci a senha", response: "Se você esqueceu a senha, clique no link 'Esqueci minha senha' na tela de login e siga as instruções para redefinição. Se o problema persistir, digite **0** para falar com um atendente." },
+                    2: { type: 'response', text: "Alterar dados do perfil", response: "Para alterar seus dados, acesse a área 'Meu Perfil' no app/site. Se não encontrar o que procura, digite **0** para falar com um atendente." },
+                    3: { type: 'response', text: "Não consigo fazer login", response: "Tente limpar o cache do seu navegador ou app e tente novamente. Certifique-se de que o seu e-mail e senha estão corretos. Caso o problema persista, digite **0** para falar com um atendente." },
+                    9: { type: 'back' },
+                    0: { type: 'whatsapp' }
+                }
+            },
+            2: { // Problemas com app ou site
+                message: "Por favor, escolha a opção que melhor descreve seu problema:<br><br> 1️⃣ Site/App está lento <br> 2️⃣ Encontrei um erro ou bug <br> 3️⃣ Sugestão de melhoria <br> 9️⃣ Voltar ao menu principal <br> 0️⃣ Falar com um atendente (WhatsApp)",
+                next: {
+                    1: { type: 'response', text: "Site/App está lento", response: "A lentidão pode estar relacionada à sua conexão. Tente fechar e reabrir o app/site. Se o problema persistir, digite **0** para que possamos investigar melhor." },
+                    2: { type: 'response', text: "Encontrei um erro ou bug", response: "Lamentamos o inconveniente! Para relatar um bug, digite **0** para que você possa nos enviar o máximo de detalhes possível, como capturas de tela e o que estava fazendo. " },
+                    3: { type: 'response', text: "Sugestão de melhoria", response: "Adoramos sugestões! Para enviar sua ideia, digite **0** e fale com um atendente. Sua opinião é muito importante para nós!" },
+                    9: { type: 'back' },
+                    0: { type: 'whatsapp' }
+                }
+            },
+            3: { // Marcar consulta
+                message: "Você deseja:<br><br> 1️⃣ Marcar uma nova consulta <br> 2️⃣ Reagendar ou cancelar consulta <br> 9️⃣ Voltar ao menu principal <br> 0️⃣ Falar com um atendente (WhatsApp)",
+                next: {
+                    1: { type: 'response', text: "Marcar uma nova consulta", response: "Para marcar uma nova consulta, acesse a seção 'Agendamentos' no nosso site ou app. Caso precise de ajuda, digite **0**." },
+                    2: { type: 'response', text: "Reagendar ou cancelar consulta", response: "O reagendamento/cancelamento pode ser feito na seção 'Meus Agendamentos'. É importante realizar o cancelamento com **24 horas de antecedência**. Se tiver dificuldades, digite **0**." },
+                    9: { type: 'back' },
+                    0: { type: 'whatsapp' }
+                }
+            },
+            4: { // Opção 4 do Menu Principal - Falar com atendente (Redirecionamento direto)
+                message: "Você escolheu falar com um atendente (WhatsApp).",
+                next: { 
+                    // Não tem sub-opções, apenas redireciona
+                }
+            }
+        };
+
+        // Função para formatar a hora atual
+        function getTimestamp() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            return `${hours}:${minutes}`;
+        }
+
+        // Adiciona uma mensagem ao chat
+        function appendMessage(text, isUser = false) {
+            const msgBox = document.createElement("div");
+            msgBox.className = "message " + (isUser ? "user" : "bot");
+            msgBox.innerHTML = text;
+
+            const timestamp = document.createElement("span");
+            timestamp.className = "timestamp";
+            timestamp.innerText = getTimestamp();
+            msgBox.appendChild(timestamp);
+
+            chatMessages.appendChild(msgBox);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Função que exibe a opção de redirecionamento para o WhatsApp
+        function showWhatsappLink() {
+            const text = `Olá, INFOMED! Preciso de ajuda no chat.`;
+            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+
+            appendMessage(`Entendido. Você será encaminhado(a) para o nosso WhatsApp (${WHATSAPP_NUMBER}).`, false);
+            
+            const linkText = document.createElement('a');
+            linkText.href = whatsappUrl;
+            linkText.target = "_blank";
+            linkText.className = "whatsapp-link";
+            linkText.innerHTML = '<i class="bi bi-whatsapp"></i> Clique aqui para iniciar a conversa';
+
+            const linkBox = document.createElement("div");
+            linkBox.className = "message bot";
+            linkBox.appendChild(linkText);
+            chatMessages.appendChild(linkBox);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            currentLevel = 0;
+            setTimeout(() => appendMessage(options[currentLevel].message, false), 1500);
+        }
+
+        // Processa a opção escolhida pelo usuário
+        function processOption(value) {
+            const currentOptions = options[currentLevel].next;
+            
+            if (currentLevel !== 0) {
+                if (value === 9) {
+                    currentLevel = 0;
+                    appendMessage(options[currentLevel].message, false);
+                    return;
+                }
+                if (value === 0) {
+                    showWhatsappLink();
+                    return;
+                }
+            }
+            
+            const option = currentOptions[value];
+
+            if (!option) {
+                appendMessage("Opção inválida. Por favor, digite uma das opções listadas.", false);
+                return;
+            }
+
+            if (value === 4 && currentLevel === 0) {
+                showWhatsappLink();
+            }
+            else if (option.type === 'response') {
+                appendMessage(option.response, false);
+            }
+            else if (option.level !== undefined) {
+                currentLevel = option.level;
+                appendMessage(options[currentLevel].message, false);
+            }
+        }
+
+        function sendMessage() {
+            const value = msgInput.value.trim();
+            if (!value) return;
+
+            const numberValue = parseInt(value, 10);
+            if (isNaN(numberValue)) {
+                appendMessage("Por favor, digite apenas o número da opção desejada.", false);
+                msgInput.value = "";
+                return;
+            }
+
+            appendMessage(value, true);
+            processOption(numberValue);
+            msgInput.value = "";
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); 
+                sendMessage();
+            }
+        }
+
+        // Função para o botão de voltar - pode ser personalizada
+        function goToPreviousPage() {
+            // Se estiver em um sub-menu, volta para o menu principal
+            if (currentLevel !== 0) {
+                currentLevel = 0;
+                appendMessage(options[currentLevel].message, false);
+            } else {
+                // Se estiver no menu principal, pode voltar para a página anterior do site
+                // ou fazer alguma outra ação, como fechar o chat.
+                // Exemplo: window.history.back(); ou window.close();
+                alert("Você está no menu principal. Clique em uma opção ou feche a janela.");
+            }
+        }
+
+        window.onload = () => {
+             appendMessage(options[0].message, false);
+             msgInput.focus();
+        };
+
+    </script>
+</body>
+</html>

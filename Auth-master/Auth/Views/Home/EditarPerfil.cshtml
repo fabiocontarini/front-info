@@ -1,0 +1,207 @@
+﻿@{
+    ViewData["Title"] = "Editar Perfil";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Infomed</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Poppins", sans-serif;
+            background: url('/images/FundoAzul.jpg') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header-icons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            .header-icons i {
+                font-size: 22px;
+                color: #5a8ca4;
+                cursor: pointer;
+            }
+
+        .logo {
+            width: 130px;
+            margin: 10px auto;
+        }
+
+        .profile-img {
+            font-size: 80px;
+            color: #c0c0c0;
+            display: block;
+            margin: 0 auto;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+        }
+
+        .add-photo {
+            color: #5a8ca4;
+            font-size: 14px;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+
+        .form-section {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px; /* mais espaçamento entre os campos */
+            width: 100%;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px; /* mais confortável para digitar */
+            border-radius: 12px; /* mais arredondado */
+            border: 1px solid #ccc;
+            background-color: #f5f5f5;
+            font-size: 15px;
+            box-sizing: border-box; /* garante que o padding não quebre o layout */
+        }
+
+            input:focus {
+                outline: none;
+                border-color: #7dc4e0;
+                background-color: #e3f2f9;
+            }
+
+        .update-button {
+            display: flex;
+            justify-content: center;
+            margin-top: 25px;
+        }
+
+        button {
+            background-color: #7dc4e0;
+            border: none;
+            border-radius: 25px;
+            color: white;
+            padding: 12px 35px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+            button:hover {
+                background-color: #5aaacb;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-icons">
+            <i class="fa-solid fa-arrow-left" title="Voltar" onclick="window.history.back()"></i>
+            <img src="~/images/LogoInfomed.png" alt="Logo Infomed" class="logo" />
+            <i class="fa-solid fa-right-from-bracket" title="Sair" onclick="alert('Sair da conta');"></i>
+        </div>
+
+        <h4>Sua conta -</h4>
+
+        <div class="profile-section">
+            <i class="fa-solid fa-user-circle profile-img"></i>
+            <p class="add-photo">Adicionar uma foto +</p>
+            <input type="file" id="inputPhoto" style="display:none" accept="image/*">
+        </div>
+
+        <form>
+            <div class="form-section">
+                <div class="form-group">
+                    <label>NOME:</label>
+                    <input type="text" value="Usuário Exemplo" />
+                </div>
+
+                <div class="form-group">
+                    <label>TELEFONE:</label>
+                    <input type="text" value="99 9999-9999" />
+                </div>
+
+                <div class="form-group">
+                    <label>E-MAIL:</label>
+                    <input type="email" value="usuarioexemplo@email.com" />
+                </div>
+
+                <div class="form-group">
+                    <label>ENDEREÇO:</label>
+                    <input type="text" value="Rua exemplo n 999" />
+                </div>
+
+                <div class="form-group">
+                    <label>CPF:</label>
+                    <input type="text" value="999-999-999-99" />
+                </div>
+
+                <h4 style="margin-top: 15px;">TROCAR SENHA -</h4>
+
+                <div class="form-group">
+                    <label>SENHA:</label>
+                    <input type="password" placeholder="Insira a senha..." />
+                </div>
+
+                <div class="form-group">
+                    <label>CONFIRMAR SENHA:</label>
+                    <input type="password" placeholder="Insira a senha novamente..." />
+                </div>
+            </div>
+
+            <div class="update-button">
+                <button type="button" onclick="alert('Atualizar informações');">Atualizar</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const addPhotoBtn = document.querySelector('.add-photo');
+        const inputPhoto = document.getElementById('inputPhoto');
+        const profileImg = document.querySelector('.profile-img');
+
+        addPhotoBtn.addEventListener('click', () => inputPhoto.click());
+
+        inputPhoto.addEventListener('change', () => {
+            const file = inputPhoto.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    profileImg.src = e.target.result;
+                    profileImg.classList.remove('fa-user-circle');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>

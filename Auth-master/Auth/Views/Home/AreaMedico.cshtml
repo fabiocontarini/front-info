@@ -1,0 +1,257 @@
+﻿@{
+    ViewData["Title"] = "Área do Médico";
+}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - INFOMED</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: url('/Images/FundoAzul.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #f8f9fa;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+        }
+
+        .btn-outline-custom {
+            border: 2px solid #4db6ac;
+            color: #4db6ac;
+            background: transparent;
+            padding: 6px 16px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: 0.3s;
+            margin-left: 8px;
+        }
+
+        .btn-outline-custom:hover {
+            background-color: #4db6ac;
+            color: #fff;
+        }
+
+        .btn-areamedico {
+            background-color: #4db6ac;
+            color: #fff;
+            border-radius: 8px;
+            padding: 8px 18px;
+            font-weight: 500;
+        }
+
+        .btn-areamedico:hover {
+            background-color: #3e9b93;
+            color: #fff;
+        }
+
+        /* MAIN CONTAINER: ajustado tom para ficar mais esverdeado/translúcido */
+        .main-container {
+            /* leve tom teal translúcido sobre a imagem de fundo */
+            background: #e6f0f5; /* controla o "tom" */
+            border-radius: 14px;
+            padding: 36px 36px 40px;
+            max-width: 760px;
+            margin: 70px auto;
+            box-shadow: 0 18px 40px rgba(12, 75, 78, 0.12);
+            backdrop-filter: blur(6px);
+            position: relative;
+        }
+
+        /* Título principal */
+        .main-container h2 {
+            color: #134c49;
+            font-weight: 800;
+            text-align: center;
+            margin: 0 0 12px;
+            font-size: 30px;
+        }
+
+        /* Subtítulo centralizado (Consultas agendadas) */
+        .subtitle {
+            color: #2f5f5c;
+            text-align: center;
+            font-weight: 600;
+            margin: 6px auto 18px;
+            font-size: 14px;
+            position: relative;
+            display: block;
+            width: fit-content;
+        }
+
+        /* linha decorativa centralizada abaixo do subtítulo */
+        .subtitle::after {
+            content: "";
+            display: block;
+            height: 2px;
+            width: 120px;
+            background: rgba(220, 238, 238, 0.9);
+            margin: 8px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Caixa branca interna (conteúdo das consultas) */
+        .inner-box {
+            background-color: rgba(255, 255, 255, 0.98);
+            border-radius: 10px;
+            padding: 18px;
+            max-height: 300px;
+            overflow-y: auto;
+            box-shadow: inset 0 6px 18px rgba(0,0,0,0.02);
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        /* Barra de rolagem discreta verde */
+        .inner-box::-webkit-scrollbar {
+            width: 7px;
+        }
+        .inner-box::-webkit-scrollbar-thumb {
+            background-color: #3e9b93;
+            border-radius: 8px;
+        }
+
+        /* Cartões de consulta (estilo igual ao da referência) */
+        .consulta-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 5px solid #16827b;
+            padding: 14px 16px;
+            border-radius: 8px;
+            margin-bottom: 14px;
+            background: #fff;
+            transition: transform .12s ease, box-shadow .12s ease;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.03);
+        }
+
+        .consulta-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 22px rgba(10,60,60,0.07);
+        }
+
+        .consulta-card strong {
+            color: #134c49;
+            display:block;
+        }
+
+        .consulta-card small {
+            color: #6a7776;
+        }
+
+        /* Botões Aceitar / Recusar (bordas arredondadas e sombreadas como na referência) */
+        .btn-aceitar {
+            background-color: transparent;
+            border: 1.6px solid #16827b;
+            color: #16827b;
+            border-radius: 8px;
+            padding: 6px 14px;
+            font-weight: 700;
+            margin-right: 8px;
+        }
+        .btn-aceitar:hover {
+            background-color: #16827b;
+            color: white;
+        }
+
+        .btn-recusar {
+            background-color: transparent;
+            border: 1.6px solid #ed9c9c;
+            color: #e75b5b;
+            border-radius: 8px;
+            padding: 6px 14px;
+            font-weight: 700;
+        }
+        .btn-recusar:hover {
+            background-color: #e75b5b;
+            color: white;
+        }
+
+        /* Responsividade */
+        @@media (max-width: 820px) {
+            .main-container { margin: 30px 18px; padding: 22px; }
+            .inner-box { max-height: 380px; }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-light px-3">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <button class="btn btn-light me-2" onclick="window.location.href='/Home/Perfil'">
+                    <i class="bi bi-person-circle"></i>
+                </button>
+                <button class="btn btn-light me-3" onclick="window.location.href='/Home/Chat'">
+                    <i class="bi bi-question-circle"></i>
+                </button>
+                <a href="/Home" class="btn btn-areamedico">ínicio</a>
+            </div>
+            <div class="d-flex align-items-center">
+                <a class="navbar-brand fw-bold d-flex align-items-center me-3" href="#">
+                    <img src="/Images/LogoInfomed.png" width="70" class="me-2" alt="Logo INFOMED">
+                </a>
+                <a href="/Identity/Account/register" class="btn btn-outline-custom">Registrar-se</a>
+                <a href="/Identity/Account/login" class="btn btn-outline-custom">Entrar</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Conteúdo central -->
+    <div class="main-container" role="main">
+        <h2>Área do Médico</h2>
+        <div class="subtitle">Consultas agendadas</div>
+
+        <div class="inner-box" aria-live="polite" aria-label="Lista de consultas">
+            <div class="consulta-card" role="listitem">
+                <div>
+                    <strong>João Silva</strong>
+                    <small>10/10/2025 - 09:30</small>
+                </div>
+                <div>
+                    <button class="btn-aceitar" onclick="aceitar('João Silva')">Aceitar</button>
+                    <button class="btn-recusar" onclick="recusar('João Silva')">Recusar</button>
+                </div>
+            </div>
+
+            <div class="consulta-card" role="listitem">
+                <div>
+                    <strong>Maria Oliveira</strong>
+                    <small>10/10/2025 - 13:20</small>
+                </div>
+                <div>
+                    <button class="btn-aceitar" onclick="aceitar('Maria Oliveira')">Aceitar</button>
+                    <button class="btn-recusar" onclick="recusar('Maria Oliveira')">Recusar</button>
+                </div>
+            </div>
+
+            <div class="consulta-card" role="listitem">
+                <div>
+                    <strong>Carlos Souza</strong>
+                    <small>10/10/2025 - 17:30</small>
+                </div>
+                <div>
+                    <button class="btn-aceitar" onclick="aceitar('Carlos Souza')">Aceitar</button>
+                    <button class="btn-recusar" onclick="recusar('Carlos Souza')">Recusar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function aceitar(nome){ alert('Consulta de ' + nome + ' aceita.'); }
+        function recusar(nome){ if(confirm('Deseja recusar a consulta de ' + nome + '?')) alert('Consulta de ' + nome + ' recusada.'); }
+    </script>
+</body>
+</html>

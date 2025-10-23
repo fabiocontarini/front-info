@@ -1,0 +1,282 @@
+﻿@{
+    ViewData["Title"] = "Especialidades";
+}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - Infomed</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('/images/FundoAzul.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+        }
+
+        .page-container {
+            background: #fff;
+            max-width: 900px;
+            margin: 30px auto;
+            border-radius: 20px;
+            padding: 25px 35px;
+            box-shadow: 0px 4px 20px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .icon-btn {
+            position: absolute;
+            top: 20px;
+            background: #fff;
+            border-radius: 12px;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            cursor: pointer;
+        }
+
+        .icon-left {
+            left: -70px;
+        }
+
+        .icon-right {
+            right: -70px;
+        }
+
+        .logo {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+            .logo img {
+                width: 180px;
+            }
+
+        .btn-back {
+            background: none;
+            border: none;
+            font-size: 26px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            color: #4db6ac;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: #e6f0f5;
+            border-radius: 25px;
+            padding: 8px 15px;
+            margin-bottom: 20px;
+        }
+
+            .search-box i {
+                font-size: 18px;
+                color: #555;
+                margin-right: 8px;
+            }
+
+            .search-box input {
+                border: none;
+                outline: none;
+                flex: 1;
+                background: transparent;
+                font-size: 15px;
+            }
+
+        .especialidades {
+            background: #e6f0f5;
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+            .especialidades h3 {
+                font-size: 16px;
+                font-weight: bold;
+                margin-bottom: 15px;
+                color: #333;
+            }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 12px;
+        }
+
+        @@media (max-width: 992px) {
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @@media (max-width: 576px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 18px 10px;
+            text-align: center;
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid rgba(0,0,0,0.06);
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 8px;
+        }
+
+            .card:hover {
+                background: #4db6ac;
+                color: #fff;
+            }
+
+            .card i {
+                font-size: 24px;
+                color: #4db6ac;
+            }
+
+            .card:hover i {
+                color: #fff;
+            }
+
+            .card span {
+                display: block;
+                line-height: 1.1;
+                font-size: 13px;
+                padding: 0 6px;
+            }
+
+        #noResults {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            margin-top: 15px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <div class="icon-btn icon-left" onclick="window.location.href='/Home/Perfil'"><i class="bi bi-person-fill"></i></div>
+        <div class="icon-btn icon-right" onclick="window.location.href='/Home/Chat'"><i class="bi bi-question-lg"></i></div>
+
+        <div class="logo"><img src="/images/Logoinfomed.png" alt="Infomed Logo" /></div>
+
+        <button class="btn-back" onclick="window.history.back()">
+            <i class="bi bi-arrow-left"></i>
+        </button>
+
+        <div class="search-box">
+            <i class="bi bi-search"></i>
+            <input type="search" id="searchInput" placeholder="Pesquisar especialidade..." />
+        </div>
+
+        <section class="especialidades">
+            <h3>@ViewData["Title"]</h3>
+
+            <div class="grid" id="cardsContainer">
+                <div class="card" data-id="1" data-nome="Odontologia"><i class="fa-solid fa-tooth"></i><span>Odontologia</span></div>
+                <div class="card" data-id="2" data-nome="Neurologia"><i class="fa-solid fa-brain"></i><span>Neurologia</span></div>
+                <div class="card" data-id="3" data-nome="Cardiologia"><i class="bi bi-heart-pulse"></i><span>Cardiologia</span></div>
+                <div class="card" data-id="4" data-nome="Saúde da mulher"><i class="bi bi-gender-female"></i><span>Saúde da mulher</span></div>
+                <div class="card" data-id="5" data-nome="Dermatologia"><i class="bi bi-person-bounding-box"></i><span>Dermatologia</span></div>
+                
+                <div class="card" data-id="1" data-nome="Ortopedia">
+                    <i class="fa-solid fa-bone"></i>
+                    <span>Ortopedia</span>
+                </div>
+
+                <div class="card" data-id="7" data-nome="Clínica geral"><i class="bi bi-hospital"></i><span>Clínica geral</span></div>
+                <div class="card" data-id="8" data-nome="Medicina da família"><i class="bi bi-people"></i><span>Medicina da família</span></div>
+                
+                <div class="card" data-id="2" data-nome="Cirurgia geral">
+                    <i class="fa-solid fa-user-doctor"></i>
+                    <span>Cirurgia geral</span>
+                </div>
+                
+                <div class="card" data-id="10" data-nome="Endocrinologia"><i class="bi bi-eyedropper"></i><span>Endocrinologia</span></div>
+
+                <div class="card" data-id="15" data-nome="Gatroenterologista">
+                    <i class="bi bi-person-badge"></i>
+                    <span>Gastroenterologia</span>
+                </div>
+
+
+
+
+                
+                <div class="card" data-id="12" data-nome="Hematologia"><i class="bi bi-droplet-half"></i><span>Hematologia</span></div>
+                <div class="card" data-id="13" data-nome="Infectologia"><i class="bi bi-virus"></i><span>Infectologia</span></div>
+
+                <div class="card" data-id="4" data-nome="Nefrologia">
+                    <i class="fa-solid fa-droplet"></i>
+                    <span>Nefrologia</span>
+                </div>
+                
+                <div class="card" data-id="15" data-nome="Pneumologia"><i class="bi bi-lungs"></i><span>Pneumologia</span></div>
+                <div class="card" data-id="16" data-nome="Pediatria"><i class="bi bi-emoji-smile"></i><span>Pediatria</span></div>
+                <div class="card" data-id="17" data-nome="Oftalmologia"><i class="bi bi-eyeglasses"></i><span>Oftalmologia</span></div>
+
+                <div class="card" data-id="4" data-nome="Psiquiatria">
+                    <i class="fa-solid fa-brain"></i>
+                    <span>Psiquiatria</span>
+                </div>
+
+            </div>
+
+            <p id="noResults">Nenhuma especialidade encontrada.</p>
+        </section>
+    </div>
+
+    <script>
+        const searchInput = document.getElementById("searchInput");
+        const cards = document.querySelectorAll("#cardsContainer .card");
+        const noResults = document.getElementById("noResults");
+
+        searchInput.addEventListener("input", function () {
+            const filter = this.value.toLowerCase();
+            let found = false;
+            cards.forEach(card => {
+                const text = card.innerText.toLowerCase();
+                if (text.includes(filter)) {
+                    card.style.display = "flex";
+                    found = true;
+                } else {
+                    card.style.display = "none";
+                }
+            });
+            noResults.style.display = found ? "none" : "block";
+        });
+
+        // Redireciona para a página de médicos
+        cards.forEach(card => {
+            card.addEventListener("click", () => {
+                const id = card.getAttribute("data-id");
+                const nome = card.getAttribute("data-nome");
+                window.location.href = `/Home/Medicos?especialidadeId=${id}&especialidadeNome=${encodeURIComponent(nome)}`;
+            });
+        });
+    </script>
+</body>
+</html>

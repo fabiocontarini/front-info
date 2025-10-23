@@ -1,102 +1,290 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Calendário de Consultas - Paciente";
 }
 
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>@ViewData["Title"]</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <style>
-    body {
-        background-color: #D2691E; /* Cor de fundo chocolate */
-        background-image: linear-gradient(0deg, #8B4513 1px, transparent 1px), /* Linhas horizontais */
-        linear-gradient(90deg, #8B4513 1px, transparent 1px); /* Linhas verticais */
-        background-size: 40px 40px; /* Tamanho do quadrado (tamanho das linhas) */
-        background-position: top left;
-        background-repeat: repeat; /* Repetição das linhas quadriculadas */
-        margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
-        color: #fff;
-    }
+:root {
+  --bg-teal: #66aebe;
+  --teal-dark: #2b5965;
+  --card-bg: #ffffff;
+  --muted: #6b8a91;
+  --accent: #2b8eb0;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  background: url('/images/FundoAzul.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #21393c;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap {
+  max-width: 1100px;
+  margin: 28px auto;
+  padding: 18px;
+  position: relative;
+}
+.card {
+  background: var(--card-bg);
+  border-radius: 14px;
+  overflow: visible;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+  padding: 28px;
+  position: relative;
+}
+.logo {
+  height: 56px;
+  margin: 0 auto 8px;
+  width: 240px;
+  background: url('/images/logoInfomed.png') center/contain no-repeat;
+}
+h1 {
+  text-align: center;
+  font-weight: 500;
+  color: var(--teal-dark);
+  margin: 6px 0 18px;
+  font-size: 30px;
+}
 
-    h1 {
-        color: #FFD700; /* Amarelo dourado do chocolate */
-        text-align: center;
-        font-size: 3rem;
-        margin-top: 50px;
-        text-shadow: 2px 2px #8B4513; /* Sombra de chocolate escuro */
-    }
+/* === BOTÃO DE VOLTAR === */
+.back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--bg-teal);
+  background: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: all 0.25s ease;
+}
+.back-btn svg {
+  width: 22px;
+  height: 22px;
+  stroke: var(--bg-teal);
+  stroke-width: 2.5;
+  fill: none;
+  transition: all 0.25s ease;
+}
+.back-btn:hover {
+  background: var(--bg-teal);
+}
+.back-btn:hover svg {
+  stroke: #ffffff;
+}
 
-    p {
-        color: #FFF8DC; /* Cor de texto mais suave */
-        font-size: 1.2rem;
-        text-align: center;
-        max-width: 800px;
-        margin: 20px auto;
-        line-height: 1.6;
-    }
+/* === CALENDÁRIO === */
+.calendar-wrap { display: flex; gap: 18px; flex-wrap: wrap; align-items: flex-start; }
+.left { flex: 1 1 360px; min-width: 320px; }
+.right { flex: 1 1 360px; min-width: 320px; }
+.doc-bar { background: #bcd6df; color: #08384a; padding: 10px 16px; border-radius: 8px; text-align: center; font-weight: 600; margin-bottom: 12px; }
+.month-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.nav-btn { width: 36px; height: 36px; border-radius: 10px; background: #f0f8fb; border: none; cursor: pointer; }
+.month-title { font-weight: 700; color: var(--teal-dark); background: linear-gradient(180deg,#fff,#f6fbfd); padding: 8px 16px; border-radius: 8px; border: 2px solid rgba(100,150,170,0.12); }
+.weekdays { display: grid; grid-template-columns: repeat(7,1fr); gap: 6px; margin-bottom: 6px; color: var(--muted); font-size: 13px; }
+.calendar-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 8px; }
+.day { background: #f7fbfd; border-radius: 10px; padding: 8px; min-height: 70px; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; border: 2px solid transparent; transition: transform .08s; }
+.day:hover { transform: translateY(-3px); }
+.day.outside { opacity: .35; cursor: default; }
+.day.selected { background: #dbeffb; border: 2px solid #6aaad0; }
 
-    .content {
-        background-color: rgba(139, 69, 19, 0.8); /* Fundo translúcido chocolate */
-        border-radius: 25px;
-        padding: 20px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para destaque */
-        max-width: 900px;
-        margin: 20px auto;
-    }
+.availability { display: flex; align-items: center; gap: 6px; }
+.dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; box-shadow: 0 1px 2px rgba(0,0,0,0.08); }
+.dot.green { background: #2ecc71; }
+.dot.red { background: #e74c3c; }
+.dot.yellow { background: #f1c40f; }
+.dot.gray { background: #bfcdd3; }
 
-        .content p {
-            font-weight: bold;
-        }
+.mini-week { margin-top: 12px; padding: 10px; background: linear-gradient(#f6fbff,#ffffff); border-radius: 10px; border: 2px solid rgba(110,160,180,0.08); }
+.mini-week-grid { display: flex; gap: 8px; justify-content: space-between; }
+.mini-day { background: #f0f6f8; border-radius: 8px; padding: 8px; width: calc(100%/7 - 8px); text-align: center; }
+.mini-day .num { font-weight: 700; color: #1f5964; }
+.mini-day .dot-agg { height: 10px; width: 10px; border-radius: 50%; margin: 6px auto 0; display: block; }
 
-    .financial-info {
-        color: #FFD700; /* Amarelo dourado */
-        font-size: 1.5rem;
-        font-weight: bold;
-        margin-top: 20px;
-    }
+.panel { margin-top: 18px; padding: 14px; border-radius: 12px; background: #f9fcfd; border: 2px solid rgba(110,160,180,0.06); }
+.slots-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+.slot { padding: 10px; border-radius: 12px; text-align: center; font-weight: 700; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.06); user-select: none; }
+.slot.free { background: #dff4e6; color: #155724; }
+.slot.booked { background: #fbe0e2; color: #7a1a1f; opacity: .95; }
+.slot.selected { outline: 3px solid rgba(35,123,160,0.18); transform: translateY(-4px); }
 
-    .chocolate-seed {
-        color: #8B4513; /* Cor do chocolate mais escuro */
-        font-size: 1.5rem;
-    }
+.controls { margin-top: 12px; display: flex; gap: 8px; justify-content: center; }
+.btn.confirm { background: var(--accent); color: #fff; min-width: 160px; box-shadow: 0 6px 16px rgba(43,142,176,0.18); border: none; border-radius: 10px; padding: 10px 16px; cursor: pointer; }
+.btn.cancel { background: #f0f3f4; color: #234; border: none; border-radius: 10px; padding: 10px 16px; cursor: pointer; }
 
-    footer {
-        background-color: #8B4513; /* Chocolate escuro */
-        color: #FFD700; /* Texto dourado */
-        text-align: center;
-        padding: 10px 0;
-        font-size: 1rem;
-        margin-top: 50px;
-    }
+.input-row { display: flex; gap: 8px; align-items: center; justify-content: center; margin-bottom: 10px; }
+input[type="text"] { padding: 10px; border-radius: 10px; border: 1px solid #d6e6ea; min-width: 220px; }
+label { font-weight: 700; color: var(--teal-dark); margin-right: 6px; }
 
-        footer a {
-            color: #FFD700; /* Cor dourada para links */
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-            footer a:hover {
-                text-decoration: underline;
-            }
-
+@@media (max-width:960px) {
+  .wrap { padding: 12px; }
+  .calendar-wrap { flex-direction: column; }
+}
 </style>
+</head>
+<body>
 
-<div class="content">
-    <h1>Financeiro <span class="chocolate-seed">🍫</span></h1>
-    <p>Aqui estão as informações financeiras e nossa abordagem para a gestão de recursos. <span class="chocolate-seed">🍫</span></p>
 
-    <div class="financial-info">
-        <h2>Relatório de Receita</h2>
-        <p>Nosso relatório financeiro mensal reflete um crescimento estável, com ênfase em investimentos estratégicos para o futuro. Buscamos manter uma gestão transparente e responsável dos recursos financeiros.</p>
 
-        <h2>Investimentos e Custos</h2>
-        <p>Os investimentos em infraestrutura e expansão continuam a ser nossas prioridades, garantindo que os custos sejam monitorados de perto para maximizar a rentabilidade a longo prazo.</p>
-
-        <h2>Previsão de Lucro</h2>
-        <p>Com base nas projeções de vendas e investimentos planejados, a previsão de lucro para o próximo trimestre é positiva, com uma expectativa de aumento de 10% no retorno sobre os investimentos.</p>
+<div class="wrap">
+  <div class="card">
+    <div class="logo">
+                <!-- Botão de Voltar -->
+                <button class="back-btn" onclick="window.history.back()">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </button>
+            </div>
+    <h1>Marcar Consulta</h1>
+    <div class="calendar-wrap">
+      <div class="left">
+        <div class="doc-bar">Dr. Thom Maier</div>
+        <div style="margin:10px 0; text-align:center;">
+          <div class="input-row">
+            <label for="patientName">Seu nome:</label>
+            <input type="text" id="patientName" placeholder="ex: João Silva">
+          </div>
+        </div>
+        <div class="month-nav">
+          <button class="nav-btn" id="prevBtn">‹</button>
+          <div class="month-title" id="monthTitle">Mês — 2025</div>
+          <button class="nav-btn" id="nextBtn">›</button>
+        </div>
+        <div class="weekdays">
+          <div>Seg.</div><div>Ter.</div><div>Qua.</div><div>Qui.</div>
+          <div>Sex.</div><div>Sab.</div><div>Dom.</div>
+        </div>
+        <div class="calendar-grid" id="calendarGrid"></div>
+        <div class="mini-week" id="miniWeek"></div>
+      </div>
+      <div class="right">
+        <div class="panel">
+          <div style="font-weight:700; color:#1f5964; margin-bottom:10px;" id="selectedLabel">Selecione um dia</div>
+          <div class="slots-grid" id="slotsGrid"></div>
+          <div class="controls">
+            <button class="btn cancel" id="btnClearSelection">Cancelar</button>
+            <button class="btn confirm" id="btnConfirm" disabled>Confirmar Consulta</button>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 
-<footer>
-    <p>&copy; 2025 - Todos os direitos reservados. <a href="#">Política de Privacidade</a> | <a href="#">Termos de Uso</a></p>
-</footer>
+<script>
+const TIMES = ["09:30", "13:20", "17:30"];
+let selectedDate = null;
+let selectedTime = null;
+
+const calendarGrid = document.getElementById("calendarGrid");
+const monthTitle = document.getElementById("monthTitle");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const miniWeekEl = document.getElementById("miniWeek");
+const slotsGrid = document.getElementById("slotsGrid");
+const selectedLabel = document.getElementById("selectedLabel");
+const btnConfirm = document.getElementById("btnConfirm");
+const btnClearSelection = document.getElementById("btnClearSelection");
+
+const today = new Date();
+let viewYear = today.getFullYear();
+let viewMonth = today.getMonth();
+
+function render() {
+  monthTitle.textContent = `${viewMonth+1} — ${viewYear}`;
+  renderCalendar();
+  renderMiniWeek();
+  renderSlots();
+}
+
+function renderCalendar() {
+  calendarGrid.innerHTML = "";
+  const firstOfMonth = new Date(viewYear, viewMonth, 1);
+  const firstWeekday = (firstOfMonth.getDay()+6)%7;
+  const daysInMonth = new Date(viewYear, viewMonth+1,0).getDate();
+  const totalCells = Math.ceil((firstWeekday+daysInMonth)/7)*7;
+  for (let i=0;i<totalCells;i++){
+    const cell = document.createElement("div");
+    cell.className="day";
+    const dayIndex=i-firstWeekday+1;
+    if (i<firstWeekday || dayIndex>daysInMonth){ 
+      cell.classList.add("outside"); 
+      cell.innerHTML=`<div class="num">${i<firstWeekday?dayIndex+daysInMonth:dayIndex-daysInMonth}</div><div class="availability"></div>`; 
+      calendarGrid.appendChild(cell); 
+      continue;
+    }
+    const dayNumber=dayIndex;
+    const dateObj=new Date(viewYear,viewMonth,dayNumber);
+    cell.innerHTML=`<div><div class="num">${dayNumber}</div></div><div style="display:flex;gap:8px;"><span class="dot green"></span></div>`;
+    cell.addEventListener("click",()=>selectDate(dateObj,cell));
+    calendarGrid.appendChild(cell);
+  }
+}
+
+function renderMiniWeek(){
+  miniWeekEl.innerHTML="";
+  if (!selectedDate) return;
+  const start=new Date(selectedDate);
+  start.setDate(selectedDate.getDate()-(selectedDate.getDay()+6)%7);
+  const grid=document.createElement("div"); grid.className="mini-week-grid";
+  for(let i=0;i<7;i++){
+    const d=new Date(start); d.setDate(start.getDate()+i);
+    const mini=document.createElement("div");
+    mini.className="mini-day";
+    mini.innerHTML=`<div class="num">${d.getDate()}</div><div class="dot-agg" style="background:#2ecc71"></div>`;
+    mini.addEventListener("click",()=>selectDate(d));
+    grid.appendChild(mini);
+  }
+  miniWeekEl.appendChild(grid);
+}
+
+function selectDate(dateObj,cellEl=null){
+  selectedDate=new Date(dateObj.getFullYear(),dateObj.getMonth(),dateObj.getDate());
+  selectedTime=null;
+  btnConfirm.disabled=true;
+  document.querySelectorAll(".day").forEach(e=>e.classList.remove("selected"));
+  if(cellEl) cellEl.classList.add("selected");
+  renderMiniWeek();
+  renderSlots();
+}
+
+function renderSlots(){
+  slotsGrid.innerHTML="";
+  if(!selectedDate){ selectedLabel.textContent="Selecione um dia"; return;}
+  selectedLabel.textContent=`Dia selecionado: ${selectedDate.getDate()}/${selectedDate.getMonth()+1}/${selectedDate.getFullYear()}`;
+  TIMES.forEach(t=>{
+    const div=document.createElement("div");
+    div.className="slot free";
+    div.textContent=t;
+    div.addEventListener("click",()=>{
+      document.querySelectorAll(".slot").forEach(s=>s.classList.remove("selected"));
+      div.classList.add("selected");
+      selectedTime=t;
+      btnConfirm.disabled=false;
+    });
+    slotsGrid.appendChild(div);
+  });
+}
+
+prevBtn.addEventListener("click",()=>{viewMonth--; if(viewMonth<0){viewMonth=11; viewYear--; } render();});
+nextBtn.addEventListener("click",()=>{viewMonth++; if(viewMonth>11){viewMonth=0; viewYear++; } render();});
+btnClearSelection.addEventListener("click",()=>{selectedDate=null; selectedTime=null; btnConfirm.disabled=true; document.querySelectorAll(".day").forEach(e=>e.classList.remove("selected")); renderSlots(); renderMiniWeek(); });
+btnConfirm.addEventListener("click",()=>{ alert(`Consulta selecionada para ${selectedTime} em ${selectedDate.getDate()}/${selectedDate.getMonth()+1}/${selectedDate.getFullYear()}`); });
+
+render();
+</script>
+</body>
+</html>

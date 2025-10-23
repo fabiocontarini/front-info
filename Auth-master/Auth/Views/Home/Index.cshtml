@@ -18,7 +18,7 @@
             background: url('Images/medico.jpg') no-repeat right center;
             background-size: cover;
             color: #1a2a45;
-            min-height: 623px;
+            min-height: 760px;
             display: flex;
             align-items: center;
             padding: 0 20px;
@@ -109,17 +109,26 @@
     <nav class="navbar navbar-light bg-light shadow-sm px-3">
         <div class="container-fluid d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center">
-                <button class="btn btn-light me-2"><i class="bi bi-person-circle"></i></button>
-                <button class="btn btn-light me-3"><i class="bi bi-question-circle"></i></button>
-                <a href="/Home/Privacy" class="btn btn-areamedico">Área do Médico</a>
+
+                <button class="btn btn-light me-2" onclick="window.location.href='/Home/Perfil'">
+                    <i class="bi bi-person-circle"></i>
+                </button>
+
+                <button class="btn btn-light me-3" onclick="window.location.href='/Home/Chat'">
+                    <i class="bi bi-question-circle"></i>
+                </button>
+
+
+
+                <a href="/Home/AreaMedico" class="btn btn-areamedico">Área do Médico</a>
             </div>
 
             <div class="d-flex align-items-center">
-                <a class="navbar-brand fw-bold d-flex align-items-center me-3" href="#">
-                    <img src="Images/LogoInfomed.png" width="40" class="me-2">
-                    INFOMED
+                <a class="navbar-brand fw-bold d-flex align-items-center me-3" href="/Home/Financeiro">
+                    <img src="Images/LogoInfomed.png" width="70" class="me-2">
+                    
                 </a>
-                <a href="/Identity/Account/Register" class="btn btn-outline-custom">Registrar-se</a>
+                <a href="/Identity/Account/register" class="btn btn-outline-custom">Registrar-se</a>
                 <a href="/Identity/Account/login" class="btn btn-outline-custom">Entrar</a>
             </div>
         </div>
@@ -129,7 +138,7 @@
     <section class="hero">
         <div class="container text-center text-md-start">
             <h1>Sua saúde em<br>1º lugar</h1>
-            <a href="Consultas.html" class="btn btn-consultas mt-3">Consultas</a>
+            <a href="/Home/Especialidades" class="btn btn-consultas mt-3">Consultas</a>
         </div>
     </section>
 
@@ -146,10 +155,9 @@
         <div class="info-card">
             <h5>Nosso objetivo</h5>
             <p>
-                Nosso projeto busca resolver a dificuldade que a população enfrenta ao agendar consultas médicas e retirar medicamentos na farmácia popular.
-                Vamos desenvolver um sistema que reúna médicos disponíveis, seus horários e o estoque da farmácia popular,
-                facilitando o acesso à saúde e evitando filas desnecessárias.
-                O objetivo é oferecer um atendimento acessível, economizando recursos da população e proporcionando informações úteis para melhorar a qualidade de vida.
+                Seu principal objetivo é contribuir para a melhoria do acesso à saúde de qualidade, por meio de uma plataforma digital que conecta cidadãos a serviços essenciais de forma prática, acessível e informativa. A escolha do tema se deu em virtude da urgência em garantir atendimento médico básico e confiável, especialmente para populações em situação de vulnerabilidade e com acesso limitado ao sistema de saúde. 
+                Como resultado, foi desenvolvido o site/aplicativo Infomed, uma plataforma voltada à promoção da saúde por meio de funcionalidades como agendamento de consultas, consulta de medicamentos disponíveis na Farmácia Popular, acesso a informações confiáveis sobre prevenção de doenças, e integração com serviços de saúde pública e privada em diferentes cidades.  
+                O público-alvo da plataforma inclui usuários que enfrentam dificuldades no acesso à saúde, mas também gestores, clínicas e farmácias que buscam melhorar o atendimento à população. A iniciativa busca incentivar a organização do sistema de saúde local, facilitar o acesso aos serviços e contribuir para a redução de desigualdades, promovendo o bem-estar de forma digital, segura e eficiente. 
             </p>
         </div>
     </section>
@@ -170,8 +178,8 @@
                 <a href="#">Sobre-nós</a> | <a href="#">Início</a>
             </div>
             <p class="mt-2 mb-0">
-                <img src="Images/LogoInfomed.png" width="30" class="me-1">
-                INFOMED - Saúde e Bem-estar
+                <img src="Images/LogoInfomed.png" width="70" class="me-1">
+                
             </p>
         </div>
     </footer>

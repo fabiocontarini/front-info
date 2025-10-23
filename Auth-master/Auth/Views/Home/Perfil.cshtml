@@ -1,0 +1,171 @@
+﻿@{
+    ViewData["Title"] = "Perfil do Usuário";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Infomed</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Poppins", sans-serif;
+            background: url('/images/FundoAzul.jpg') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header-icons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            .header-icons i {
+                font-size: 22px;
+                color: #5a8ca4;
+                cursor: pointer;
+                transition: 0.3s;
+            }
+
+                .header-icons i:hover {
+                    color: #3c6e91;
+                }
+
+        .logo {
+            width: 130px;
+            margin: 10px auto;
+        }
+
+        .profile-section {
+            margin-top: 20px;
+        }
+
+        .profile-img {
+            font-size: 80px;
+            color: #c0c0c0;
+            display: block;
+            margin: 0 auto;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+        }
+
+        .add-photo {
+            color: #5a8ca4;
+            font-size: 14px;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+
+        .info {
+            text-align: left;
+            margin-top: 20px;
+            line-height: 1.8;
+        }
+
+            .info span {
+                font-weight: bold;
+            }
+
+        .update-section {
+            margin-top: 20px;
+            color: #3c6e91;
+            font-size: 15px;
+        }
+
+            .update-section button {
+                background-color: #7dc4e0;
+                border: none;
+                border-radius: 25px;
+                color: white;
+                padding: 10px 30px;
+                cursor: pointer;
+                font-size: 15px;
+                margin-top: 10px;
+                transition: 0.3s;
+            }
+
+                .update-section button:hover {
+                    background-color: #5aaacb;
+                }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-icons">
+            <i class="fa-solid fa-arrow-left" title="Voltar" onclick="window.history.back()"></i>
+            <img src="~/images/LogoInfomed.png" alt="Logo Infomed" class="logo" />
+            <i class="fa-solid fa-right-from-bracket" title="Sair" onclick="window.location.href='@Url.Action("Login", "Conta")'"></i>
+        </div>
+
+        <h4>Sua conta -</h4>
+
+        <div class="profile-section">
+            <img id="profilePreview" src="" alt="Foto do usuário" class="profile-img" style="display:none;">
+            <i id="defaultIcon" class="fa-solid fa-user-circle profile-img"></i>
+            <p class="add-photo" id="addPhotoBtn">Adicionar uma foto +</p>
+            <input type="file" id="inputPhoto" style="display:none" accept="image/*">
+        </div>
+
+        <div class="info">
+            <p><span>NOME:</span> Usuário Exemplo</p>
+            <p><span>TELEFONE:</span> 99 9999-9999</p>
+            <p><span>E-MAIL:</span> usuarioexemplo@email.com</p>
+            <p><span>ENDEREÇO:</span> Rua exemplo n 999</p>
+            <p><span>CPF:</span> 999-999-999-99</p>
+            <p><span>SENHA:</span> ********</p>
+        </div>
+
+        <div class="update-section">
+            <p>Deseja atualizar alguma informação?</p>
+            <form asp-action="EditarPerfil">
+                <button type="submit">Clique aqui</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const addPhotoBtn = document.getElementById('addPhotoBtn');
+        const inputPhoto = document.getElementById('inputPhoto');
+        const profilePreview = document.getElementById('profilePreview');
+        const defaultIcon = document.getElementById('defaultIcon');
+
+        addPhotoBtn.addEventListener('click', () => {
+            inputPhoto.click();
+        });
+
+        inputPhoto.addEventListener('change', () => {
+            const file = inputPhoto.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    profilePreview.src = e.target.result;
+                    profilePreview.style.display = 'block';
+                    defaultIcon.style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>

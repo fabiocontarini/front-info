@@ -20,31 +20,50 @@ namespace Auth.Controllers
             return View();
         }
 
-        [Authorize(Roles =  "Admin, TI")]
-        public IActionResult Tecnologia()
+        /*[Authorize(Roles =  "Admin, TI")]*/
+        public IActionResult Chat()
         {
             return View();
         }
 
-        [Authorize(Roles = "Admin, Rh")]
+        public IActionResult Perfil()
+        {
+            return View();
+        }
+
+        public IActionResult EditarPerfil()
+        {
+            return View();
+        }
+
+
+        /* [Authorize(Roles = "Admin, Rh")]
         public IActionResult Rh()
         {
             return View();
+        } */
+
+        public IActionResult Medicos(int especialidadeId, string especialidadeNome)
+        {
+            ViewData["EspecialidadeId"] = especialidadeId;
+            ViewData["EspecialidadeNome"] = especialidadeNome;
+
+            return View();
         }
 
-        [Authorize(Roles = "Admin, Financeiro")]
+       /* [Authorize(Roles = "Admin, Financeiro")]*/
         public IActionResult Financeiro()
         {
             return View();
         }
 
-        [Authorize(Roles = "Admin, Comercial")]
-        public IActionResult Comercial()
+       /* [Authorize(Roles = "Admin, Comercial")]*/
+        public IActionResult AreaMedico()
         {
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Especialidades()
         {
             return View();
         }
@@ -54,5 +73,11 @@ namespace Auth.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+    }
+
+    [Route("api/[controller]")]
+    [ApiController]
+    public class MedicosController : ControllerBase
+    {
     }
 }
